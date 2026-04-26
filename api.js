@@ -60,11 +60,19 @@ function extractContent(result) {
 }
 
 function parseModelJson(raw) {
+    // Strip markdown code fences (```json ... ``` or ``` ... ```)
+    const stripped = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/, '').trim();
     try {
-        return JSON.parse(raw);
+        return JSON.parse(stripped);
     } catch {
+        // Try extracting first {...} block from the original
         const match = raw.match(/\{[\s\S]*\}/);
-        if (match) return JSON.parse(match[0]);
+        if (match) {
+            try {
+                return JSON.parse(match[0]);
+            } catch { /* fall through */ }
+        }
+        console.error('[api] Raw model response that failed to parse:', raw.slice(0, 500));
         throw new Error('Could not parse JSON from model response.');
     }
 }
