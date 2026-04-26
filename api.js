@@ -153,7 +153,7 @@ export async function generateText(messages) {
 /**
  * Generate an image using Pollinations.
  * @param {string} prompt - The image prompt (English).
- * @param {{ aspectRatio?: string, seed?: number }} options
+ * @param {{ aspectRatio?: string, seed?: number, model?: string }} options
  * @returns {Promise<string>} A URL string to the generated image.
  */
 export async function generateImage(prompt, options = {}) {
@@ -162,7 +162,7 @@ export async function generateImage(prompt, options = {}) {
 
     const seed = options.seed ?? Math.floor(Math.random() * 1_000_000);
     const url = new URL(`${baseUrl}/${encodeURIComponent(prompt)}`);
-    url.searchParams.set('model', config.POLLINATIONS_IMAGE_MODEL);
+    url.searchParams.set('model', options.model || config.POLLINATIONS_IMAGE_MODEL);
     url.searchParams.set('seed', String(seed));
     url.searchParams.set('nologo', 'true');
 

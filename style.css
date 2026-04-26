@@ -177,6 +177,7 @@ button:hover {
     transform-origin: bottom center;
     opacity: 0;
     z-index: 5;
+    mix-blend-mode: multiply;
 }
 
 .character-sprite.active {
