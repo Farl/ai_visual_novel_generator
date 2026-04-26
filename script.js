@@ -301,10 +301,7 @@ Rules:
                 }, {
                     role: 'user',
                     content: JSON.stringify(storyOutline),
-                }],
-                json: true,
-            });
-            return JSON.parse(completion.content);
+                }]);
         } catch (e) {
             console.error("Failed to parse LLM response into JSON:", e);
             return null;
