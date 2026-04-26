@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const stylePrompt = storyJson.style_prompt;
             loadingText.textContent = T.loadingChars;
             const characterPromises = storyJson.characters.map(char => 
-                generateImage(`${char.image_prompt}, ${stylePrompt}, white background, full body portrait`, { aspectRatio: '2:3', model: 'gptimage-large' })
+                generateImage(`${char.image_prompt}, ${stylePrompt}, white background, full body portrait`, { aspectRatio: '2:3', model: 'gptimage' })
                     .then(url => ({ name: char.name, url }))
             );
             const characterResults = await Promise.all(characterPromises);
