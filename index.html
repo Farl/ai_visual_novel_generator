@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Visual Novel Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quintessential&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+</head>
+<body>
+    <script src="config.js"></script>
+    <script src="config.local.js" onerror="void 0"></script>
+    <div id="app">
+        <div id="creator-view">
+            <h1>AI Visual Novel Generator</h1>
+            <p>Enter a theme for your visual novel (e.g., "a lonely knight finds a magic sword").</p>
+            <textarea id="story-input" rows="10" placeholder="A haunted library where books whisper secrets to a young scholar..."></textarea>
+            <input type="text" id="style-input" placeholder="Art style (optional, e.g., 'anime', 'oil painting'). Leave blank for AI to choose.">
+            <button id="generate-btn">Create Visual Novel</button>
+        </div>
+
+        <div id="loading-view" class="hidden">
+            <div class="spinner"></div>
+            <p id="loading-text">Generating story...</p>
+        </div>
+
+        <div id="game-view" class="hidden">
+            <div id="background-container"></div>
+            <div id="character-container"></div>
+            <div id="dialogue-box">
+                <div id="character-name"></div>
+                <div id="dialogue-text"></div>
+            </div>
+            <button id="restart-btn" class="hidden">Create a New Story</button>
+        </div>
+    </div>
+    <script type="importmap">
+    {
+      "imports": {
+        "canvas-confetti": "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.module.mjs"
+      }
+    }
+    </script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
