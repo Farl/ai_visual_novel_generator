@@ -10,6 +10,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return lang.split('-')[0];
     })();
 
+    // Human-readable language name for AI prompts (models understand this better than locale codes)
+    const langNameForPrompt = {
+        'zh-tw': 'Traditional Chinese (繁體中文)',
+        'zh': 'Simplified Chinese (简体中文)',
+        'ja': 'Japanese (日本語)',
+        'ko': 'Korean (한국어)',
+        'es': 'Spanish (Español)',
+        'fr': 'French (Français)',
+        'de': 'German (Deutsch)',
+        'pt': 'Portuguese (Português)',
+        'it': 'Italian (Italiano)',
+        'ru': 'Russian (Русский)',
+        'ar': 'Arabic (العربية)',
+    }[userLang] || 'English';
+
     const translations = {
         en: {
             title: "AI Visual Novel Generator",
@@ -252,7 +267,7 @@ The JSON must follow this schema:
   "chapters": [ { "title": "string", "summary": "string (A sentence summarizing this chapter's key event and its contribution to the plot)" } ]
 }
 Rules:
-- All user-visible text ("title", "overall_summary", "description", chapter "title", "summary") must be in the user's language: ${userLang}. Character "name" should be appropriate for the language.
+- All user-visible text ("title", "overall_summary", "description", chapter "title", "summary") must be in the user's language: ${langNameForPrompt}. Character "name" should be appropriate for the language.
 - All prompts for the system ("style_prompt") must be in English.
 - ${styleInstruction}
 - Create 2-3 compelling characters with distinct personalities and motivations.
@@ -285,7 +300,7 @@ The final JSON must follow this schema:
   } ]
 }
 Rules:
-- All user-facing text ("title", "text" fields) MUST be in the user's language: ${userLang}. Character "name" should also be appropriate for the language.
+- All user-facing text ("title", "text" fields) MUST be in the user's language: ${langNameForPrompt}. Character "name" should also be appropriate for the language.
 - All prompts for image generation ("style_prompt", "image_prompt", "background_prompt") MUST be in English.
 - The 'image_prompt' for characters should be a rich description based on the outline, focusing on appearance and personality.
 - Crucially, the 'image_prompt' MUST start with the character's specified gender (e.g., "Male knight...", "Female scientist...") to ensure correct visual generation.
@@ -486,7 +501,7 @@ The JSON must follow this schema:
   } ]
 }
 Rules:
-- All text for the user to see ("title", "text" fields) MUST be in the user's language: ${userLang}. The character "name" should also be appropriate for the language.
+- All text for the user to see ("title", "text" fields) MUST be in the user's language: ${langNameForPrompt}. The character "name" should also be appropriate for the language.
 - All prompts for image generation ("style_prompt", "image_prompt", "background_prompt") MUST be in English.
 - ${styleInstruction}
 - The 'image_prompt' for characters should NOT include style information like 'anime' or 'transparent background', as this will be handled by the game engine. Just describe the character.
