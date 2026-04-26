@@ -48,7 +48,7 @@ Set these in your repository's **Settings → Secrets and variables → Actions*
 
 | Name | Type | Description |
 |------|------|-------------|
-| `GITHUB_MODELS_TOKEN` | Secret | PAT with `models:read` permission |
+| `GH_MODELS_TOKEN` | Secret | PAT with `models:read` permission |
 
 ### Optional Variables
 
@@ -64,7 +64,7 @@ Set these in your repository's **Settings → Secrets and variables → Actions*
 gh repo create ai_visual_novel_generator --public --source=. --remote=origin --push
 
 # Set the GitHub Models token
-gh secret set GITHUB_MODELS_TOKEN
+gh secret set GH_MODELS_TOKEN
 
 # Enable Pages (source: GitHub Actions)
 gh api repos/{owner}/ai_visual_novel_generator/pages \

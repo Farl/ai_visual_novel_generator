@@ -49,7 +49,7 @@ jobs:
               POLLINATIONS_IMAGE_MODEL: '${{ vars.POLLINATIONS_IMAGE_MODEL || 'flux' }}',
               POLLINATIONS_API_KEY: '${{ secrets.POLLINATIONS_API_KEY }}',
               GITHUB_MODELS_BASE_URL: 'https://models.github.ai',
-              GITHUB_TOKEN: '${{ secrets.GITHUB_MODELS_TOKEN }}',
+              GITHUB_TOKEN: '${{ secrets.GH_MODELS_TOKEN }}',
               GITHUB_MODEL: '${{ vars.GITHUB_MODEL || 'openai/gpt-4.1-mini' }}',
               GITHUB_API_VERSION: '${{ vars.GITHUB_API_VERSION || '2026-03-10' }}'
           };
