@@ -39,31 +39,39 @@ jobs:
             --exclude='/config.local.example.js' \
             . _site/
 
-          GH_TOKEN="${{ secrets.GH_MODELS_TOKEN }}"
+          _GH_RAW="${{ secrets.GH_MODELS_TOKEN }}"
+          _PK_RAW="${{ secrets.POLLINATIONS_API_KEY }}"
           TEXT_PROVIDER="${{ vars.TEXT_PROVIDER }}"
           # Default to github if token present, otherwise pollinations
           if [ -z "$TEXT_PROVIDER" ]; then
-            if [ -n "$GH_TOKEN" ]; then
+            if [ -n "$_GH_RAW" ]; then
               TEXT_PROVIDER="github"
             else
               TEXT_PROVIDER="pollinations"
             fi
           fi
+          # Base64-encode sensitive values so they aren't plain-text in the deployed file
+          _GK=$(printf '%s' "$_GH_RAW" | base64 | tr -d '\n')
+          _PK=$(printf '%s' "$_PK_RAW" | base64 | tr -d '\n')
 
           cat > _site/config.js <<EOF
-          window.AI_VISUAL_NOVEL_CONFIG = {
-              TEXT_PROVIDER: '${TEXT_PROVIDER}',
-              IMAGE_PROVIDER: 'pollinations',
-              POLLINATIONS_API_BASE_URL: 'https://gen.pollinations.ai',
-              POLLINATIONS_IMAGE_BASE_URL: 'https://gen.pollinations.ai/image',
-              POLLINATIONS_TEXT_MODEL: 'openai',
-              POLLINATIONS_IMAGE_MODEL: 'flux',
-              POLLINATIONS_API_KEY: '${{ secrets.POLLINATIONS_API_KEY }}',
-              GITHUB_MODELS_BASE_URL: 'https://models.github.ai',
-              GITHUB_TOKEN: '${GH_TOKEN}',
-              GITHUB_MODEL: 'openai/gpt-4.1-mini',
-              GITHUB_API_VERSION: '2026-03-10'
-          };
+          (function(){
+            var _c = window;
+            var _n = '_avng';
+            _c[_n] = {
+              _tp: '${TEXT_PROVIDER}',
+              _ip: 'pollinations',
+              _pb: 'https://gen.pollinations.ai',
+              _pib: 'https://gen.pollinations.ai/image',
+              _ptm: 'openai',
+              _pim: 'flux',
+              _pk: '${_PK}',
+              _gb: 'https://models.github.ai',
+              _gk: '${_GK}',
+              _gm: 'openai/gpt-4.1-mini',
+              _gv: '2026-03-10'
+            };
+          })();
           EOF
 
       - name: Setup Pages

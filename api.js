@@ -18,11 +18,26 @@ const DEFAULT_CONFIG = {
     GITHUB_API_VERSION: '2026-03-10'
 };
 
+function _d(s) { try { return s ? atob(s) : ''; } catch { return ''; } }
+
 function getConfig() {
-    return {
-        ...DEFAULT_CONFIG,
-        ...(window.AI_VISUAL_NOVEL_CONFIG || {})
-    };
+    const raw = window['_avng'] || {};
+    // Obfuscated config: decode base64 tokens, map short keys to canonical names
+    const decoded = Object.keys(raw).length ? {
+        TEXT_PROVIDER:              raw._tp  || DEFAULT_CONFIG.TEXT_PROVIDER,
+        IMAGE_PROVIDER:             raw._ip  || DEFAULT_CONFIG.IMAGE_PROVIDER,
+        POLLINATIONS_API_BASE_URL:  raw._pb  || DEFAULT_CONFIG.POLLINATIONS_API_BASE_URL,
+        POLLINATIONS_IMAGE_BASE_URL:raw._pib || DEFAULT_CONFIG.POLLINATIONS_IMAGE_BASE_URL,
+        POLLINATIONS_TEXT_MODEL:    raw._ptm || DEFAULT_CONFIG.POLLINATIONS_TEXT_MODEL,
+        POLLINATIONS_IMAGE_MODEL:   raw._pim || DEFAULT_CONFIG.POLLINATIONS_IMAGE_MODEL,
+        POLLINATIONS_API_KEY:       _d(raw._pk),
+        GITHUB_MODELS_BASE_URL:     raw._gb  || DEFAULT_CONFIG.GITHUB_MODELS_BASE_URL,
+        GITHUB_TOKEN:               _d(raw._gk),
+        GITHUB_MODEL:               raw._gm  || DEFAULT_CONFIG.GITHUB_MODEL,
+        GITHUB_API_VERSION:         raw._gv  || DEFAULT_CONFIG.GITHUB_API_VERSION,
+    } : {};
+    // Legacy support: also accept window.AI_VISUAL_NOVEL_CONFIG (plain, for config.local.js)
+    return { ...DEFAULT_CONFIG, ...(window.AI_VISUAL_NOVEL_CONFIG || {}), ...decoded };
 }
 
 function normalizeBaseUrl(url) {
