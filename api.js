@@ -7,8 +7,8 @@ const API_TIMEOUT_MS = 90_000;
 const DEFAULT_CONFIG = {
     TEXT_PROVIDER: 'github',
     IMAGE_PROVIDER: 'pollinations',
-    POLLINATIONS_API_BASE_URL: 'https://text.pollinations.ai',
-    POLLINATIONS_IMAGE_BASE_URL: 'https://image.pollinations.ai',
+    POLLINATIONS_API_BASE_URL: 'https://gen.pollinations.ai',
+    POLLINATIONS_IMAGE_BASE_URL: 'https://gen.pollinations.ai/image',
     POLLINATIONS_TEXT_MODEL: 'openai',
     POLLINATIONS_IMAGE_MODEL: 'flux',
     POLLINATIONS_API_KEY: '',
@@ -115,7 +115,7 @@ async function requestPollinationsText(messages, config) {
         messages,
         jsonMode: true
     };
-    const result = await postJson(`${baseUrl}/openai`, {
+    const result = await postJson(`${baseUrl}/v1/chat/completions`, {
         method: 'POST',
         headers,
         body: JSON.stringify(payload)
